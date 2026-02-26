@@ -34,7 +34,7 @@ function DashboardContent({ children, slug }: { children: React.ReactNode; slug:
     const pathname = usePathname()
     const router = useRouter()
     const supabase = createClient()
-    const { paroquia, paroquiaId } = useParoquia()
+    const { paroquia, paroquiaId, loading: paroquiaLoading } = useParoquia()
     const { role, loading: roleLoading } = useUserRole(paroquiaId)
 
     const cor = paroquia?.cor_primaria || '#2563EB'
@@ -74,6 +74,18 @@ function DashboardContent({ children, slug }: { children: React.ReactNode; slug:
         coordenador: 'Coordenador',
         membro: 'Membro',
         operador_pdv: 'Operador PDV',
+    }
+
+    // Block rendering until role and parish data are loaded
+    if (paroquiaLoading || roleLoading) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <div className="text-center animate-pulse">
+                    <div className="w-12 h-12 rounded-2xl bg-gray-200 mx-auto mb-3" />
+                    <p className="text-gray-400 text-sm">Carregando...</p>
+                </div>
+            </div>
+        )
     }
 
     return (

@@ -29,7 +29,7 @@ export function useUserRole(paroquiaId: string): UserRole {
 
     useEffect(() => {
         if (!paroquiaId) {
-            setData(prev => ({ ...prev, loading: false }))
+            // Keep loading=true until we have a paroquiaId to fetch with
             return
         }
 
